@@ -29,6 +29,11 @@ using System.Windows.Shapes;
  * 1. Be able to draw objects on the window
  * 2. Make node objects
  * 3. Make line objects
+ * >>> 4. Make Shape Object <<<
+ * 
+ * So basically I need to make a shape object that keeps track of the placement of all the nodes.
+ * When the user clicks on a pre-existing node of an uncomplete shape, it completes the shape
+ * 
  * 
  */
 
@@ -54,7 +59,7 @@ namespace FreeShapes
             sillyDebug();
             // I need coordinates of mouse icon during mouse click
             Point position = Mouse.GetPosition(drawingArea);
-            makeCircle((double) position.X, (double) position.Y);
+            makeCircle((double) position.X - 5, (double) position.Y - 5);
         }
 
         private void drawingArea_MouseMove(object sender, MouseEventArgs e)
@@ -90,6 +95,7 @@ namespace FreeShapes
 
             drawingArea.Children.Add(circle);
 
+            
             circle.SetValue(Canvas.LeftProperty, x);
             circle.SetValue(Canvas.TopProperty, y); 
 
