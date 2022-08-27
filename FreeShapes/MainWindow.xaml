@@ -7,9 +7,29 @@
         mc:Ignorable="d"
         Title="Free Shape Maker" Height="450" Width="800">
     <Grid>
-        <Canvas Name="drawingArea" MouseDown="drawingArea_MouseDown" MouseMove="drawingArea_MouseMove">
-            
-        </Canvas>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        
+
+        <Canvas Name="drawingArea" MouseDown="drawingArea_MouseDown" 
+                MouseMove="drawingArea_MouseMove" Background="White" Grid.Row="0" 
+                Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="3" />
+
+        <TextBlock x:Name="debugMsg" Grid.Column="0" Grid.Row="2" Text="debug: " />
+
+
+
+
+
 
     </Grid>
 </Window>

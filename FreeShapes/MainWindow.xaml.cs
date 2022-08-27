@@ -39,19 +39,22 @@ namespace FreeShapes
     /// </summary>
     public partial class MainWindow : Window
     {
+        public int debugCtr = 0;    // for sillyDebug method
         public MainWindow()
         {
             InitializeComponent();
-            makeLine();
-            makeCircle(50, 50);
-            makeCircle(150, 150);
-            makeCircle(250, 250);
+            //makeLine();
+            //makeCircle(50, 50);
+            //makeCircle(150, 150);
+            //makeCircle(250, 250);
         }
 
         private void drawingArea_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            sillyDebug();
             // I need coordinates of mouse icon during mouse click
-
+            Point position = Mouse.GetPosition(drawingArea);
+            makeCircle((double) position.X, (double) position.Y);
         }
 
         private void drawingArea_MouseMove(object sender, MouseEventArgs e)
@@ -92,11 +95,29 @@ namespace FreeShapes
 
 
         }
+
+        private void sillyDebug()
+        {
+            if (debugCtr == 0)
+            {
+                debugMsg.Text = " click!";
+                debugCtr = 1;
+            }
+            else
+            {
+                debugMsg.Text = " clack!";
+                debugCtr = 0;
+            }
+            
+        }
     }
 }
 
 
 /* References:
  * https://docs.microsoft.com/en-us/dotnet/desktop/wpf/graphics-multimedia/shapes-and-basic-drawing-in-wpf-overview
+ * Stack Overflow
+ * Google.com :D ... Core tool of all Software Devs
+ * https://www.tutorialspoint.com/wpf/wpf_mouse.htm
  * 
  */
