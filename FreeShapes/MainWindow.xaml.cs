@@ -56,10 +56,12 @@ namespace FreeShapes
     {
         public int debugCtr = 0;    // for sillyDebug method
         Shape[] shapeArr = new Shape[100]; // should use dynamic array, but for this example I will keep it simple
+        int currShapeInd;
         public MainWindow()
         {
             InitializeComponent();
-            // For now, let's just use 1 shape to develop the algorithm of connecting lines
+            
+            currShapeInd = 0;
             Shape shape =  new Shape();
             shapeArr[0] = shape;
 
@@ -76,7 +78,8 @@ namespace FreeShapes
             // a node will have a x,y position. So if 3pixels close by, join & finish shape
 
             // -5 to align to tip of cursor
-            shapeArr[0].AddNodeToShape((double)p.X - 6, (double)p.Y - 6);
+            //shapeArr[0].AddNodeToShape((double)p.X - 6, (double)p.Y - 6);
+            shapeArr[0].CheckProximityToNode((double)p.X - 6, (double)p.Y - 6);
         }
 
         private void drawingArea_MouseMove(object sender, MouseEventArgs e)
