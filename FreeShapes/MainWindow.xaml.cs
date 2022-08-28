@@ -27,12 +27,21 @@ using System.Windows.Shapes;
  * 
  * So what do I do first?
  * 1. Be able to draw objects on the window
- * 2. Make node objects
- * 3. Make line objects
+ * 2. Make myLine, node, shape objects
+ * 3. A node object draws the circle
+ * 3. extend a line object to each of the nodes
+ * 
  * >>> 4. Make Shape Object <<<
  * 
  * So basically I need to make a shape object that keeps track of the placement of all the nodes.
  * When the user clicks on a pre-existing node of an uncomplete shape, it completes the shape
+ * > objects: lines, nodes, shapes
+ * > shape objects keeps track of the lines and nodes
+ * 
+ * So I start with 1 shape object, it collects the nodes & makes the lines. Once a shape object is
+ * completed, I then instantiate another shape object. Maybe have an array of shape objects?
+ * I will also need a method to track where the mouse is in respect to the shapes, etc.
+ * 
  * 
  * 
  */
@@ -42,24 +51,26 @@ namespace FreeShapes
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    // this MainWindow class is inherting Window class from "using System.Windows"
     public partial class MainWindow : Window
     {
         public int debugCtr = 0;    // for sillyDebug method
+        Shape[] shapeArr = new Shape[10];
         public MainWindow()
         {
             InitializeComponent();
-            //makeLine();
-            //makeCircle(50, 50);
-            //makeCircle(150, 150);
-            //makeCircle(250, 250);
+            // For now, let's just use 1 shape to develop the algorithm of connecting lines
+            Shape shape =  new Shape();
+            shapeArr[0] = shape;
+
         }
 
         private void drawingArea_MouseDown(object sender, MouseButtonEventArgs e)
         {
             sillyDebug();
-            // I need coordinates of mouse icon during mouse click
-            Point position = Mouse.GetPosition(drawingArea);
-            makeCircle((double) position.X - 5, (double) position.Y - 5);
+            Point p = Mouse.GetPosition(drawingArea);
+
+            makeCircle((double) p.X - 6, (double) p.Y - 6);   // -5 to align to tip of cursor
         }
 
         private void drawingArea_MouseMove(object sender, MouseEventArgs e)
@@ -68,18 +79,16 @@ namespace FreeShapes
 
         }
 
-        private void makeLine()
+        public void makeLine(double x1, double y1, double x2, double y2)
         {
             Line line = new Line();
-            Thickness thickness = new Thickness(101, -11, 362, 250);
-            line.Margin = thickness;
-            line.Visibility = System.Windows.Visibility.Visible;
-            line.StrokeThickness = 4;
+            //line.Visibility = System.Windows.Visibility.Visible;
+            line.StrokeThickness = 1;
             line.Stroke = System.Windows.Media.Brushes.Black;
-            line.X1 = 10;
-            line.X2 = 40;
-            line.Y1 = 70;
-            line.Y2 = 70;
+            line.X1 = x1 + 6;
+            line.Y1 = y1 + 6;
+            line.X2 = x2 + 6;
+            line.Y2 = y2 + 6;
             drawingArea.Children.Add(line);
         }
 
@@ -93,13 +102,11 @@ namespace FreeShapes
                 StrokeThickness = 6,
             };
 
-            drawingArea.Children.Add(circle);
-
-            
             circle.SetValue(Canvas.LeftProperty, x);
-            circle.SetValue(Canvas.TopProperty, y); 
-
-
+            circle.SetValue(Canvas.TopProperty, y);
+            drawingArea.Children.Add(circle);
+            Node node = new Node(x, y, circle);
+            shapeArr[0].addNode(node);
         }
 
         private void sillyDebug()
