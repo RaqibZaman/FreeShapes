@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace FreeShapes
 {
-    internal class myLine
+    internal class MyLine
     {
+        //test for git
     }
 }
