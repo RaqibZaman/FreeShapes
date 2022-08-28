@@ -12,20 +12,21 @@ namespace FreeShapes
         // class var
         private Node? currentNode; // I should probably make get/setters for these
         private Node? firstNode;
+        // a shape should probably have a list of nodes...
+        List<Node> nodes;
+
 
         // constructor
         public Shape()
         {
             currentNode = null;
             firstNode = null;
+            nodes = new List<Node>();
         }
 
-        // I'll return coordinates for making a line
-        // 
-        public void addNode(Node newNode)
+        public void AddNodeToShape(double x2, double y2)
         {
-            double x2 = newNode.X_cord;
-            double y2 = newNode.Y_cord;
+            Node newNode = new Node(x2, y2);
             // if shape has no nodes then firstNode & currentNode are same
             if (firstNode == null)
             {
@@ -39,10 +40,10 @@ namespace FreeShapes
                 double x1 = currentNode.X_cord;
                 double y1 = currentNode.Y_cord;
                 // draw line between between currentNode & newNode
-                ((MainWindow)System.Windows.Application.Current.MainWindow).makeLine(x1,y1,x2,y2);
+                ((MainWindow)System.Windows.Application.Current.MainWindow).makeLine(x1, y1, x2, y2);
                 currentNode = newNode;
             }
-        }
 
+        }
     }
 }

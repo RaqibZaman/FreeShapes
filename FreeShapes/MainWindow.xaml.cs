@@ -55,7 +55,7 @@ namespace FreeShapes
     public partial class MainWindow : Window
     {
         public int debugCtr = 0;    // for sillyDebug method
-        Shape[] shapeArr = new Shape[10];
+        Shape[] shapeArr = new Shape[100]; // should use dynamic array, but for this example I will keep it simple
         public MainWindow()
         {
             InitializeComponent();
@@ -69,8 +69,14 @@ namespace FreeShapes
         {
             sillyDebug();
             Point p = Mouse.GetPosition(drawingArea);
+            // I need to check if position is close to other nodes
+            // if close to node, finish shape and start new shape
+            // else continue placing nodes for same shape
+            // So that means I need to keep track of the positions of all the nodes in a shape
+            // a node will have a x,y position. So if 3pixels close by, join & finish shape
 
-            makeCircle((double) p.X - 6, (double) p.Y - 6);   // -5 to align to tip of cursor
+            // -5 to align to tip of cursor
+            shapeArr[0].AddNodeToShape((double)p.X - 6, (double)p.Y - 6);
         }
 
         private void drawingArea_MouseMove(object sender, MouseEventArgs e)
@@ -90,23 +96,6 @@ namespace FreeShapes
             line.X2 = x2 + 6;
             line.Y2 = y2 + 6;
             drawingArea.Children.Add(line);
-        }
-
-        private void makeCircle(double x, double y)
-        {
-            Ellipse circle = new Ellipse()
-            {
-                Width = 11,
-                Height = 11,
-                Stroke = Brushes.SteelBlue,
-                StrokeThickness = 6,
-            };
-
-            circle.SetValue(Canvas.LeftProperty, x);
-            circle.SetValue(Canvas.TopProperty, y);
-            drawingArea.Children.Add(circle);
-            Node node = new Node(x, y, circle);
-            shapeArr[0].addNode(node);
         }
 
         private void sillyDebug()

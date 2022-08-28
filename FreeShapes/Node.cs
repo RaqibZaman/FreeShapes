@@ -23,11 +23,19 @@ namespace FreeShapes
         private object line1 = null;   
         private object line2 = null;
 
-        // constructor
+        // constructor(s)
+        public Node(double x, double y)
+        {
+            X_cord = x;
+            Y_cord = y;
+            node = makeCircle(x, y);
+        }
+        
+        
         public Node(double x, double y, Ellipse circle)
         {
-            x_cord = x;
-            y_cord = y;
+            X_cord = x;
+            Y_cord = y;
             node = circle;
         }
 
@@ -41,6 +49,22 @@ namespace FreeShapes
         {
             get { return y_cord; }
             set { y_cord = value; } // need to change circle's position
+        }
+
+        private Ellipse makeCircle(double x, double y)
+        {
+            Ellipse circle = new Ellipse()
+            {
+                Width = 11,
+                Height = 11,
+                Stroke = Brushes.SteelBlue,
+                StrokeThickness = 6,
+            };
+
+            circle.SetValue(Canvas.LeftProperty, x);
+            circle.SetValue(Canvas.TopProperty, y);
+            ((MainWindow)System.Windows.Application.Current.MainWindow).drawingArea.Children.Add(circle);
+            return circle;
         }
 
     }
