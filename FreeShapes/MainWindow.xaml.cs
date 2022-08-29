@@ -54,16 +54,16 @@ namespace FreeShapes
     // this MainWindow class is inherting Window class from "using System.Windows"
     public partial class MainWindow : Window
     {
-        public int debugCtr = 0;    // for sillyDebug method
-        Shape[] shapeArr = new Shape[100]; // should use dynamic array, but for this example I will keep it simple
+        private int debugCtr;    // for sillyDebug method
+        Shape[] shapeArr; // should use dynamic array, but for this example I will keep it simple
         int currShapeInd;
         public MainWindow()
         {
             InitializeComponent();
-            
-            currShapeInd = 0;
-            Shape shape =  new Shape();
-            shapeArr[0] = shape;
+            // initialize class var
+            debugCtr = 0;
+            shapeArr = new Shape[100];
+            currShapeInd = -1;  // -1 symbolizes that no shape exists yet
 
         }
 
@@ -71,15 +71,25 @@ namespace FreeShapes
         {
             sillyDebug();
             Point p = Mouse.GetPosition(drawingArea);
-            // I need to check if position is close to other nodes
-            // if close to node, finish shape and start new shape
-            // else continue placing nodes for same shape
-            // So that means I need to keep track of the positions of all the nodes in a shape
-            // a node will have a x,y position. So if 3pixels close by, join & finish shape
 
-            // -5 to align to tip of cursor
-            //shapeArr[0].AddNodeToShape((double)p.X - 6, (double)p.Y - 6);
-            shapeArr[0].CheckProximityToNode((double)p.X - 6, (double)p.Y - 6);
+            makeShape((double)p.X - 6, (double)p.Y - 6);
+        
+            
+        }
+
+        private void makeShape(double x, double y)
+        {
+            // Check if there is no shape or if shape is finished
+            if (currShapeInd == -1 || shapeArr[currShapeInd].IsFinished)
+            {
+                Shape shape = new Shape();
+                currShapeInd++;
+                shapeArr[currShapeInd] = shape;
+                shapeArr[currShapeInd].CheckProximityToNode(x, y);
+            } 
+
+            shapeArr[currShapeInd].CheckProximityToNode(x, y);
+
         }
 
         private void drawingArea_MouseMove(object sender, MouseEventArgs e)

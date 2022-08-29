@@ -39,6 +39,7 @@ namespace FreeShapes
             node = circle;
         }
 
+        // properties
         public double X_cord 
         { 
             get { return x_cord; }
@@ -50,7 +51,8 @@ namespace FreeShapes
             get { return y_cord; }
             set { y_cord = value; } // need to change circle's position
         }
-
+        
+        // methods
         private Ellipse makeCircle(double x, double y)
         {
             Ellipse circle = new Ellipse()

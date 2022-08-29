@@ -14,6 +14,7 @@ namespace FreeShapes
         private Node? firstNode;
         // a shape should probably have a list of nodes...
         private List<Node> nodes;
+        private Boolean finished; // if shape is completed
 
 
         // constructor
@@ -22,8 +23,19 @@ namespace FreeShapes
             currentNode = null;
             firstNode = null;
             nodes = new List<Node>();
+            IsFinished = false; 
         }
 
+        // properties
+        public Boolean IsFinished
+        {
+            get { return finished; }
+            set { finished = value; }
+        }
+
+
+
+        // methods
         public void AddNodeToShape(double x2, double y2)
         {
             Node newNode = new Node(x2, y2);
@@ -46,9 +58,11 @@ namespace FreeShapes
             }
         }
 
-        // Check if mouse cursor is close by firstNode to complete the shape
-        // if false, AddNodeToShape
-        // if true, FinishShape
+
+        /* I need to check if position is close to other nodes. If close to node, finish shape and start new shape.
+         * else continue placing nodes for same shape. So that means I need to keep track of the positions of all the nodes in a shape.
+         * Check if mouse cursor is close by firstNode to complete the shape. if false, AddNodeToShape. if true, FinishShape.
+         */
         public void CheckProximityToNode(double x, double y)
         {
             // check if there is no node
@@ -77,8 +91,10 @@ namespace FreeShapes
 
         public void FinishShape(Node firstNode, Node lastNode)
         {
+            // connect first & last nodes
             ((MainWindow)System.Windows.Application.Current.MainWindow).makeLine
                 (currentNode.X_cord, currentNode.Y_cord, firstNode.X_cord, firstNode.Y_cord);
+            IsFinished = true;
         }
     }
 }
