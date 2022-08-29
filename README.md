@@ -10,3 +10,5 @@ The idea is to make free form shapes with these requirements:
 7. Save the image file.
 * (opt.) The user can open the image using your application and update the shapes that were drawn in a previous session.
 * (better) Add error handling
+
+https://github.com/RaqibZaman/FreeShapes/blob/main/FreeShapeAnimation.gif
